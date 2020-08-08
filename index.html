@@ -3,11 +3,23 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/953969d2ff.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/style.css">
-    <title>Document</title>
+    <title>Sticky Note</title>
   </head>
   <body>
-    
+    <main>
+      <section class="new-note">
+        <div class="new-note-input">
+          <text-area placeholder="// Write a note here"></text-area>
+        </div>
+        <div class="new-note-btns">
+          <input type="color" id="note-color" name="note-color" value="#e66465">
+          <button id="add-note-btn">Add note</button>
+        </div>
+      </section>
+      <section class="notes"></section>
+    </main>
     <script src="./index.js"></script>
   </body>
 </html>
