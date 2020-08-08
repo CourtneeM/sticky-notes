@@ -1,7 +1,7 @@
 let stickyNotes = {
-  notes: ['Your first note!'],
-  addNote: function(note) {
-    this.notes.push(note);
+  notes: [{description: 'Your first note!', color: '#c465e6'}],
+  addNote: function(description, color) {
+    this.notes.push({description, color});
   },
   deleteNote: function(index) {
     this.notes.splice(index, 1);
@@ -10,24 +10,47 @@ let stickyNotes = {
 
 const displayNotes = () =>{
   const notesSection = document.querySelector('.notes');
+
+  if (notesSection.firstChild) {
+    while (notesSection.firstChild) {
+      notesSection.removeChild(notesSection.firstChild);
+    }
+  }
+
   stickyNotes.notes.forEach((note) => {
     let noteDiv = document.createElement('div');
+    noteDiv.style.backgroundColor = note.color;
     notesSection.appendChild(noteDiv);
 
     let noteP = document.createElement('p');
-    noteP.textContent = note;
-    notesSection.appendChild(noteP);
+    noteP.textContent = note.description;
+    noteDiv.appendChild(noteP);
 
     let noteTrash = document.createElement('i');
-    noteTrash.classList.add('fas', 'fa-trash-alt');
-    notesSection.appendChild(noteTrash);
+    noteTrash.classList.add('far', 'fa-trash-alt');
+    noteDiv.appendChild(noteTrash);
   });
 }
 
-displayNotes();
+const buttonHandler = (() => {
+  const addNoteBtn = document.getElementById('add-note-btn');
+  
+  addNoteBtn.addEventListener('click', () => {
+    const userInputTextarea = document.querySelector('textarea');
+    const colorInputValue = document.querySelector('[type="color"]').value;
+    stickyNotes.addNote(userInputTextarea.value, colorInputValue);
+    displayNotes();
+    userInputTextarea.value = "";
+  });
 
-const addNoteBtn = document.getElementById('add-note-btn');
-addNoteBtn.addEventListener('click', () => {
-  const colorInputValue = document.querySelector('[type="color"]').value;
-  console.log(colorInputValue);
-})
+  const notesSection = document.querySelector('.notes');
+  notesSection.addEventListener('click', (e) => {
+    if (e.target.classList.contains('fa-trash-alt')) {
+      let index = Array.from(e.target.parentElement.parentElement.children).indexOf(e.target.parentElement);
+      stickyNotes.deleteNote(index);
+      displayNotes();
+    }
+  });
+})();
+
+displayNotes();
