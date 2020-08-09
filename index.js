@@ -1,5 +1,5 @@
 let stickyNotes = {
-  notes: [{description: "Your first note!", color: "#e66456"}],
+  notes: [],
   addNote: function(description, color) {
     this.notes.push({description, color});
     localStorageHandler.storeNotes({description, color});
